@@ -1,7 +1,7 @@
 import neostandard from 'neostandard'
 const tseslint = neostandard.plugins['typescript-eslint']
 
-export function config (ignores) {
+export function config (ignores = []) {
   return [
     ...neostandard({
       ignores,
