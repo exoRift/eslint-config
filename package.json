@@ -1,0 +1,13 @@
+{
+  "name": "eslint-config",
+  "module": "index.mjs",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "neostandard": "^0.12.1",
+    "typescript-eslint": "^8.27.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9.23.0"
+  }
+}
