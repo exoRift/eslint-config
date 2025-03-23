@@ -3,10 +3,10 @@ const tseslint = neostandard.plugins['typescript-eslint']
 
 /**
  * Configure ESLint
- * @param   {String}                           ignores Patterns to ignore
- * @returns {import('eslint').Linter.Config[]}
+ * @param   [ignores] {String[]}                         ignores Patterns to ignore
+ * @returns           {import('eslint').Linter.Config[]}
  */
-export default function config (ignores) {
+function config (ignores) {
   return [
     ...neostandard({
       ignores,
@@ -186,3 +186,5 @@ export default function config (ignores) {
     }
   ]
 }
+
+export default config
