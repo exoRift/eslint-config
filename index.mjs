@@ -1,12 +1,7 @@
 import neostandard from 'neostandard'
 const tseslint = neostandard.plugins['typescript-eslint']
 
-/**
- * Configure ESLint
- * @param   [ignores] {String[]}                         ignores Patterns to ignore
- * @returns           {import('eslint').Linter.Config[]}
- */
-function config (ignores) {
+export function config (ignores) {
   return [
     ...neostandard({
       ignores,
@@ -186,5 +181,3 @@ function config (ignores) {
     }
   ]
 }
-
-export default config
