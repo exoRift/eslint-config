@@ -142,11 +142,11 @@ export async function config (ignores = []) {
               ArrowFunctionExpression: false,
               ClassDeclaration: true,
               ClassExpression: true,
-              FunctionDeclaration: true,
-              FunctionExpression: true,
+              FunctionDeclaration: false,
+              FunctionExpression: false,
               MethodDefinition: true
             },
-            contexts: ['ClassProperty'],
+            contexts: ['ClassProperty', 'Program > FunctionDeclaration'],
             checkGetters: false,
             checkSetters: false
           }],
