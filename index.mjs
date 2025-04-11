@@ -198,7 +198,9 @@ export async function config (ignores = []) {
         }],
         'no-void': 'off',
         'import/no-anonymous-default-export': 'off',
-  
+        'no-fallthrough': 'warn',
+
+        '@stylistic/arrow-parens': ['error', 'always'],
         '@stylistic/comma-dangle': ['error', 'never'],
         '@stylistic/member-delimiter-style': ['error', {
           multiline: {
