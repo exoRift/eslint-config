@@ -146,7 +146,7 @@ export async function config (ignores = []) {
               FunctionExpression: false,
               MethodDefinition: true
             },
-            contexts: ['ClassProperty', 'Program > FunctionDeclaration'],
+            contexts: ['ClassProperty', 'FunctionDeclaration:not(:matches(FunctionDeclaration, FunctionExpression, ArrowFunctionExpression) FunctionDeclaration)'],
             checkGetters: false,
             checkSetters: false
           }],
