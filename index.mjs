@@ -2,7 +2,7 @@ import neostandard from 'neostandard'
 const tseslint = neostandard.plugins['typescript-eslint']
 
 export async function config (ignores = []) {
-  const jsdoc = await import('eslint-plugin-jsdoc').catch(() => undefined)
+  const jsdoc = await import('eslint-plugin-jsdoc').then((v) => v.default).catch(() => undefined)
 
   return [
     ...neostandard({

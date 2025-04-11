@@ -1,3 +1,3 @@
 import ESLint from 'eslint'
 
-export function config (ignores?: string): ESLint.Linter.Config[]
+export async function config (ignores?: string): Promise<ESLint.Linter.Config[]>
