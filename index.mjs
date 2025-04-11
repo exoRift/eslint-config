@@ -1,7 +1,9 @@
 import neostandard from 'neostandard'
 const tseslint = neostandard.plugins['typescript-eslint']
 
-export function config (ignores = []) {
+export async function config (ignores = []) {
+  const jsdoc = await import('eslint-plugin-jsdoc').catch(() => undefined)
+
   return [
     ...neostandard({
       ignores,
@@ -124,6 +126,67 @@ export function config (ignores = []) {
         }
       }
     ),
+    ...(jsdoc
+      ? [{
+        ...jsdoc.configs['flat/recommended-typescript-error'],
+        name: 'jsdoc',
+        files: ['**/*.ts*', '**/*.*js'],
+        ignores: ['migrations/**/*', 'src/components/ui/**/*', 'src/graphql/'],
+        plugins: {
+          jsdoc
+        },
+        rules: {
+          ...jsdoc.configs['flat/recommended-typescript-error'].rules,
+          'jsdoc/require-jsdoc': ['error', {
+            require: {
+              ArrowFunctionExpression: false,
+              ClassDeclaration: true,
+              ClassExpression: true,
+              FunctionDeclaration: true,
+              FunctionExpression: true,
+              MethodDefinition: true
+            },
+            contexts: ['ClassProperty'],
+            checkGetters: false,
+            checkSetters: false
+          }],
+          'jsdoc/check-line-alignment': ['error', 'always', {
+            tags: ['param', 'arg', 'argument', 'property', 'prop', 'returns', 'return', 'throws']
+          }],
+          'jsdoc/require-returns': ['error', {
+            checkGetters: false,
+            contexts: [
+              'FunctionDeclaration[returnType.typeAnnotation.typeName.name!=ReactNode][returnType.typeAnnotation.typeName.right.name!=ReactNode][returnType.typeAnnotation.type!=TSVoidKeyword]:not([returnType.typeAnnotation.typeArguments.parent.typeName.name=Promise][returnType.typeAnnotation.typeArguments.params.0.type=TSVoidKeyword])',
+              'FunctionExpression[returnType.typeAnnotation.typeName.name!=ReactNode][returnType.typeAnnotation.typeName.right.name!=ReactNode][returnType.typeAnnotation.type!=TSVoidKeyword]:not([returnType.typeAnnotation.typeArguments.parent.typeName.name=Promise][returnType.typeAnnotation.typeArguments.params.0.type=TSVoidKeyword])'
+            ]
+          }],
+          'jsdoc/require-throws': 'error',
+          'jsdoc/require-description': 'error',
+          'jsdoc/require-asterisk-prefix': 'error',
+          'jsdoc/require-param': ['error', {
+            contexts: [
+              'FunctionDeclaration:matches([params.1], :not([params.0.typeAnnotation.typeAnnotation.type=TSTypeReference]))',
+              'FunctionExpression:matches([params.1], :not([params.0.typeAnnotation.typeAnnotation.type=TSTypeReference]))'
+            ]
+          }],
+          'jsdoc/require-param-description': ['error', {
+            contexts: [
+              'FunctionDeclaration[returnType.typeAnnotation.typeName.name!=ReactNode][returnType.typeAnnotation.typeName.right.name!=ReactNode]:matches([params.1], :not([params.0.typeAnnotation.typeAnnotation.type=TSTypeReference]))',
+              'FunctionExpression[returnType.typeAnnotation.typeName.name!=ReactNode][returnType.typeAnnotation.typeName.right.name!=ReactNode]:matches([params.1], :not([params.0.typeAnnotation.typeAnnotation.type=TSTypeReference]))',
+              'ArrowFunctionExpression[returnType.typeAnnotation.typeName.name!=ReactNode][returnType.typeAnnotation.typeName.right.name!=ReactNode]:matches([params.1], :not([params.0.typeAnnotation.typeAnnotation.type=TSTypeReference]))'
+            ]
+          }],
+          'jsdoc/check-tag-names': ['error', {
+            definedTags: ['note', 'warn', 'todo', 'experimental']
+          }]
+        },
+        settings: {
+          ...jsdoc.configs['flat/recommended-typescript-error'].settings,
+          exemptDestructuredRootsFromChecks: true
+        }
+      }]
+      : []
+    ),
     {
       name: 'overrides',
       files: ['**/*.ts*', '**/*.tsx', '**/*.*js'],
@@ -176,7 +239,14 @@ export function config (ignores = []) {
       files: ['**/*.*js'],
       ignores,
       rules: {
-        '@typescript-eslint/explicit-function-return-type': 'off'
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        ...(jsdoc
+          ? {
+            'jsdoc/check-tag-names': 'off',
+            'jsdoc/no-types': 'off'
+          }
+          : {}
+        )
       }
     }
   ]
