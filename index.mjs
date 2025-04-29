@@ -122,7 +122,8 @@ export async function config ({ ignores = [], noJSDoc = false, } = {}) {
           '@typescript-eslint/prefer-ts-expect-error': 'error',
           '@typescript-eslint/non-nullable-type-assertion-style': 'error',
           '@typescript-eslint/prefer-function-type': 'error',
-          '@typescript-eslint/prefer-includes': 'error'
+          '@typescript-eslint/prefer-includes': 'error',
+          '@typescript-eslint/switch-exhaustiveness-check': 'warn'
         }
       }
     ),
