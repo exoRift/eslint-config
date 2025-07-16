@@ -1,8 +1,15 @@
 import neostandard from 'neostandard'
 const tseslint = neostandard.plugins['typescript-eslint']
 
-export async function config ({ ignores = [], noJSDoc = false, } = {}) {
-  const jsdoc = noJSDoc ? undefined : await import('eslint-plugin-jsdoc').then((v) => v.default).catch(() => undefined)
+/**
+ * Config ESLint
+ * @param options
+ * @param options.ignores    Ignore files
+ * @param options.jsdoc      Use JSDoc plugin
+ * @param options.noExplicit Turn off explicit function return types
+ */
+export async function config ({ ignores = [], JSDoc: useJSDoc = false, noExplicit = false } = {}) {
+  const jsdoc = useJSDoc ? await import('eslint-plugin-jsdoc').then((v) => v.default).catch(() => undefined) : undefined
 
   return [
     ...neostandard({
@@ -27,7 +34,7 @@ export async function config ({ ignores = [], noJSDoc = false, } = {}) {
           '@typescript-eslint/no-redeclare': 'off',
           '@typescript-eslint/no-explicit-any': 'off',
           '@typescript-eslint/no-non-null-assertion': 'off',
-          '@typescript-eslint/explicit-function-return-type': ['error', {
+          '@typescript-eslint/explicit-function-return-type': [noExplicit ? 'off' : 'error', {
             allowExpressions: true
           }],
           '@typescript-eslint/no-unused-vars': ['error', {
@@ -73,11 +80,11 @@ export async function config ({ ignores = [], noJSDoc = false, } = {}) {
           '@typescript-eslint/no-confusing-void-expression': 'off',
           '@typescript-eslint/restrict-template-expressions': ['error', {
             allowAny: true,
-            allowBoolean: false,
+            allowBoolean: true,
             allowNever: false,
-            allowNullish: true,
+            allowNullish: false,
             allowNumber: true,
-            allowRegExp: false
+            allowRegExp: true
           }],
           '@typescript-eslint/restrict-plus-operands': ['error', {
             allowAny: true,
@@ -123,7 +130,9 @@ export async function config ({ ignores = [], noJSDoc = false, } = {}) {
           '@typescript-eslint/non-nullable-type-assertion-style': 'error',
           '@typescript-eslint/prefer-function-type': 'error',
           '@typescript-eslint/prefer-includes': 'error',
-          '@typescript-eslint/switch-exhaustiveness-check': 'warn'
+          '@typescript-eslint/switch-exhaustiveness-check': ['warn', {
+            considerDefaultExhaustiveForUnions: true
+          }]
         }
       }
     ),
@@ -177,9 +186,10 @@ export async function config ({ ignores = [], noJSDoc = false, } = {}) {
               'ArrowFunctionExpression[returnType.typeAnnotation.typeName.name!=ReactNode][returnType.typeAnnotation.typeName.right.name!=ReactNode]:matches([params.1], :not([params.0.typeAnnotation.typeAnnotation.type=TSTypeReference]))'
             ]
           }],
-          'jsdoc/check-tag-names': ['error', {
-            definedTags: ['note', 'warn', 'todo', 'experimental']
-          }]
+          'jsdoc/check-tag-names': ['warn', {
+            definedTags: ['note', 'warn', 'todo', 'experimental', 'temp']
+          }],
+          'jsdoc/no-types': 'off'
         },
         settings: {
           ...jsdoc.configs['flat/recommended-typescript-error'].settings,
