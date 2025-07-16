@@ -193,6 +193,7 @@ export async function config ({ ignores = [], noJSDoc = false, } = {}) {
       files: ['**/*.ts*', '**/*.tsx', '**/*.*js'],
       ignores,
       rules: {
+        'no-labels': 'off',
         'no-debugger': 'error',
         'no-console': ['error', {
           allow: ['info', 'log', 'warn', 'error'] // Not `debug`
