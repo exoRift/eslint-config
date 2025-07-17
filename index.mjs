@@ -5,10 +5,10 @@ const tseslint = neostandard.plugins['typescript-eslint']
  * Config ESLint
  * @param options
  * @param options.ignores    Files to ignore
- * @param options.jsdoc      Use JSDoc plugin
+ * @param options.useJSDoc      Use JSDoc plugin
  * @param options.noExplicit Turn off explicit function return types
  */
-export async function config ({ ignores = [], JSDoc: useJSDoc = false, noExplicit = false } = {}) {
+export async function config ({ ignores = [], useJSDoc = false, noExplicit = false } = {}) {
   const jsdoc = useJSDoc ? await import('eslint-plugin-jsdoc').then((v) => v.default).catch(() => undefined) : undefined
 
   return [
