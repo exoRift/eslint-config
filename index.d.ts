@@ -1,10 +1,18 @@
 import ESLint from 'eslint'
 
 export async function config (opts?: {
-  ignores?: string[]
   /**
-   * By default, scan for the plugin. If the plugin exists, mount this.
-   * If this is enabled, override the scan to not use it
+   * Files to ignore
    */
-  noJSDoc?: boolean
+  ignores?: string[]
+
+  /**
+   * Enable the use of the JSDoc plugin and its rules. (Requires it to be installed)
+   */
+  useJSDoc?: boolean
+
+  /**
+   * Disable requirement of explicit function return types
+   */
+  noExplicit?: boolean
 }): Promise<ESLint.Linter.Config[]>

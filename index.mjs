@@ -4,7 +4,7 @@ const tseslint = neostandard.plugins['typescript-eslint']
 /**
  * Config ESLint
  * @param options
- * @param options.ignores    Ignore files
+ * @param options.ignores    Files to ignore
  * @param options.jsdoc      Use JSDoc plugin
  * @param options.noExplicit Turn off explicit function return types
  */
