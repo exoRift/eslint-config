@@ -245,7 +245,8 @@ export async function config ({ ignores = [], useJSDoc = false, noExplicit = fal
         '@stylistic/jsx-max-props-per-line': ['error', {
           maximum: 1,
           when: 'multiline'
-        }]
+        }],
+        "@stylistic/generator-star-spacing": ["error", "after"]
       }
     },
     {
