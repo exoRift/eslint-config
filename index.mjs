@@ -208,6 +208,7 @@ export async function config ({ ignores = [], useJSDoc = false, noExplicit = fal
         'no-console': ['error', {
           allow: ['info', 'log', 'warn', 'error'] // Not `debug`
         }],
+        'no-warning-comments': ['error', { terms: ['debug'] }],
         'no-void': 'off',
         'import/no-anonymous-default-export': 'off',
         'no-fallthrough': 'warn',
