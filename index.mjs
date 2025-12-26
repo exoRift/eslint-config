@@ -25,8 +25,7 @@ export async function config ({ ignores = [], useJSDoc = false, noExplicit = fal
         languageOptions: {
           parser: tseslint.parser,
           parserOptions: {
-            projectService: true,
-            project: './tsconfig.json'
+            projectService: true
           }
         },
         rules: {
